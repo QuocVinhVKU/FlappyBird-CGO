@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4845499721684866906}
   - component: {fileID: 4388030313717848073}
   m_Layer: 0
-  m_Name: Mobile - Flappy Bird - Version 12 Sprites_53
+  m_Name: OngCong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 638588092710255302}
   - component: {fileID: 2621568711295059745}
   m_Layer: 0
-  m_Name: Mobile - Flappy Bird - Version 12 Sprites_54
+  m_Name: OngCong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
