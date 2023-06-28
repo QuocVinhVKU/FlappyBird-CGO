@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class OngCong : MonoBehaviour
 {
     public float speed = 1f;
+    
     void Update()
     {
         transform.position += Vector3.left * speed * Time.deltaTime;
     }
-    private void OnCollisionEnter2D(Collision2D other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.gameObject.tag == "Destroy")
+        {
+            Destroy(gameObject);
+        }
     }
 }
