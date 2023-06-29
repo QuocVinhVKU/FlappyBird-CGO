@@ -6,15 +6,16 @@ public class BirdController : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float jumpForce;
+    public float angleRotateSpeed;
+    public float jumpAngle;
 
-    [SerializeField] Score score;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-
+        if (GameManager.instance.isGameOver) return;
         bool isTap = Input.GetKeyDown(KeyCode.Space);
 
         if (isTap)
@@ -22,11 +23,18 @@ public class BirdController : MonoBehaviour
             // Nhay
             Jump();
         }
+        RotateBird();
     }
 
     protected void Jump()
     {
+        AudioManager.Instance.JumpAudio();
         rb.velocity = Vector2.up * jumpForce; // Nhảy lên khi nhấn phím nhảy
+        transform.eulerAngles = new Vector3(0, 0, jumpAngle);
+    }
+    protected void RotateBird()
+    {
+        transform.eulerAngles -= new Vector3(0, 0, angleRotateSpeed * Time.deltaTime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,19 +45,24 @@ public class BirdController : MonoBehaviour
             {
                 if(coin.typeCoin == "Gold")
                 {
-                    score.score += 10;
+                    GameManager.instance.AddScore(10);
                 }
-                else if
-                    (coin.typeCoin == "Silver")
+                else if (coin.typeCoin == "Silver")
                 {
-                    score.score += 5;
+                    GameManager.instance.AddScore(5);
                 }
-                Debug.Log("Pass");
-                Debug.Log($"Score: {score.score} ");
             }
             
             Destroy(collision.gameObject);
         }
         
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground" && (GameManager.instance.isGameOver == false))
+        {
+            AudioManager.Instance.PlayEndGameAudio();
+            GameManager.instance.GameOver();
+        }
     }
 }

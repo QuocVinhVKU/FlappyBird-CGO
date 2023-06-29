@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Score : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
-    public float score;
-
     [SerializeField] TextMeshProUGUI scoreUI;
 
     private void Update()
     {
-        ScoreUI();
+        Score_UI();
     }
-    private void ScoreUI()
+    private void Score_UI()
     {
-        scoreUI.text = $"Score: {score}";
+        scoreUI.text = $"Score: {GameManager.instance.score}";
     }
 }

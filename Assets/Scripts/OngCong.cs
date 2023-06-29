@@ -7,9 +7,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class OngCong : MonoBehaviour
 {
     public float speed = 1f;
-    
+
     void Update()
     {
+        if (GameManager.instance.isGameOver) return;
         transform.position += Vector3.left * speed * Time.deltaTime;
     }
 
