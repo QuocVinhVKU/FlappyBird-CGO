@@ -12,6 +12,7 @@ public class BirdController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        CheckGameReady();
     }
     void Update()
     {
@@ -28,13 +29,26 @@ public class BirdController : MonoBehaviour
 
     protected void Jump()
     {
-        AudioManager.Instance.JumpAudio();
-        rb.velocity = Vector2.up * jumpForce; // Nhảy lên khi nhấn phím nhảy
-        transform.eulerAngles = new Vector3(0, 0, jumpAngle);
+        CheckGameReady();
+        if (!GameManager.instance.isGamePause && GameManager.instance.isGameReady)
+        {
+            AudioManager.Instance.JumpAudio();
+            rb.velocity = Vector2.up * jumpForce; // Nhảy lên khi nhấn phím nhảy
+            transform.eulerAngles = new Vector3(0, 0, jumpAngle);
+        }
+        else GameManager.instance.isGameReady = true;
+    }
+    public void CheckGameReady()
+    {
+        if (!GameManager.instance.isGameReady) rb.gravityScale = 0f;
+        else rb.gravityScale = 1f;
     }
     protected void RotateBird()
     {
-        transform.eulerAngles -= new Vector3(0, 0, angleRotateSpeed * Time.deltaTime);
+        if (GameManager.instance.isGameReady)
+        {
+            transform.eulerAngles -= new Vector3(0, 0, angleRotateSpeed * Time.deltaTime);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

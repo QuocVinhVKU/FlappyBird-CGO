@@ -15,9 +15,13 @@ public class Spawer : MonoBehaviour
 
     IEnumerator SpawOngCong()
     {
-        if (GameManager.instance.isGameOver) StopAllCoroutines();
-        float randY = Random.Range(-1.5f,1.5f);
-        GameObject objOngCong = Instantiate(ongCong, new Vector3(posSpaw.position.x, randY, posSpaw.position.z), Quaternion.identity);
+        if (GameManager.instance.isGameReady)
+        {
+            if (GameManager.instance.isGameOver) StopAllCoroutines();
+            float randY = Random.Range(-1.5f, 1.5f);
+            GameObject objOngCong = Instantiate(ongCong, new Vector3(posSpaw.position.x, randY, posSpaw.position.z), Quaternion.identity);
+            
+        }
         yield return new WaitForSeconds(timeDelay);
         StartCoroutine(SpawOngCong());
     }

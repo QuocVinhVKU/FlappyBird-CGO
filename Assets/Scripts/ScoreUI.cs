@@ -13,6 +13,6 @@ public class ScoreUI : MonoBehaviour
     }
     private void Score_UI()
     {
-        scoreUI.text = $"Score: {GameManager.instance.score}";
+        scoreUI.text = $"{GameManager.instance.score}";
     }
 }
