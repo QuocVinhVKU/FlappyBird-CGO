@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    private string birdName;
+    public Transform birdPos;
+    public BirdController yellowBird;
+    public BirdController blueBird;
     public BirdController bird;
 
     public bool isGameOver = false;
@@ -21,7 +26,24 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         LoadHighScore();
+        if (PlayerPrefs.HasKey("Bird"))
+        {
+            birdName = PlayerPrefs.GetString("Bird");
+            if (birdName == "yellow")
+            {
+                bird = Instantiate(yellowBird, birdPos.position, Quaternion.identity);
+            }
+            else if (birdName == "blue")
+            {
+                bird = Instantiate(blueBird, birdPos.position, Quaternion.identity);
+            }
+        }
+        else
+        {
+            bird = Instantiate(yellowBird, birdPos.position, Quaternion.identity);
+        }
     }
+
     public void OnGameReadyClick()
     {
         isGameReady = true;
@@ -60,10 +82,14 @@ public class GameManager : MonoBehaviour
         isGamePause = true;
         Time.timeScale = 0f;
     }
-    protected void Resume()
+    public void Resume()
     {
         isGamePause = false;
         Time.timeScale = 1f;
+    }
+    public void goMain()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
     //============SCORE=============
     void LoadHighScore()

@@ -16,6 +16,8 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+        birdAudio = GameManager.instance.bird.GetComponentInParent<AudioSource>();
+
     }
 
     public void BGM_Audio()

@@ -12,15 +12,19 @@ public class UIManager : MonoBehaviour
     [Header("StartButton")]
     public Button tapToPlay;
     
-    [Header("PAUSE BUTTON")]
+    [Header("PAUSE")]
     [SerializeField] Button pauseButton;
     [SerializeField] Image pauseBtnIMG;
     [SerializeField] Sprite pauseButtonIMG;
     [SerializeField] Sprite resumeButtonIMG;
 
+    [SerializeField] GameObject pausedPanel;
+    [SerializeField] Button resumeButt;
+    [SerializeField] Button goMainButt;
+
     [Header("LOSE")]
     [SerializeField] GameObject loseUI;
-
+    
     [SerializeField] Image medal;
     [SerializeField] Sprite medalCu;
     [SerializeField] Sprite medalAg;
@@ -37,6 +41,8 @@ public class UIManager : MonoBehaviour
         pauseBtnIMG.sprite = pauseButtonIMG;
         pauseButton.onClick.AddListener(GameManager.instance.ClickPauseButt);
         tapToPlay.onClick.AddListener(GameManager.instance.OnGameReadyClick);
+        resumeButt.onClick.AddListener(GameManager.instance.ClickPauseButt);
+        goMainButt.onClick.AddListener(GameManager.instance.goMain);
     }
     public void UpdateScore(int score)
     {
@@ -44,8 +50,17 @@ public class UIManager : MonoBehaviour
     }
     public void OnPauseButtClick()
     {
-        if (GameManager.instance.isGamePause) pauseBtnIMG.sprite = resumeButtonIMG;
-        else pauseBtnIMG.sprite = pauseButtonIMG;
+        if (GameManager.instance.isGamePause)
+        {
+            pauseBtnIMG.sprite = resumeButtonIMG;
+            pausedPanel.SetActive(true);
+        }
+        else
+        {
+            pauseBtnIMG.sprite = pauseButtonIMG;
+            pausedPanel.SetActive(false);
+        }
+
     }
     public void OpenLoseUI()
     {
